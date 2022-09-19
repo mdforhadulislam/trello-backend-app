@@ -10,8 +10,6 @@ const registerUserHendler = (req, res) => {
     const name = req.body.name ?? false;
     const email = req.body.email ?? false;
     const username = req.body.username ?? false;
-    console.log(name,username, email, req.body.password,req.body);
-    console.log(convartHash(req.body.password));
     const password = convartHash(req.body.password) ?? false;
 
     if (name && username && email && password) {
@@ -37,7 +35,6 @@ const registerUserHendler = (req, res) => {
       res.status(400).json({ message: "send valid value" });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Intarnal Server Error" });
   }
 };
