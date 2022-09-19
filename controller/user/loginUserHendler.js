@@ -10,6 +10,7 @@ const loginUserHendler = (req, res) => {
     let email = req.body.email ?? false;
     let password = req.body.password ?? false;
     if (email && password) {
+      
       const user = findByEmail(email);
       if (user && compareHash(password, user.password)) {
         const userAnotherToken = tokenRegisterThisId(user.id);

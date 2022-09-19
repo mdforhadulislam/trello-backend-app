@@ -23,12 +23,8 @@ const SingUp = () => {
 
   const submitHendler = (e)=>{
     e.preventDefault()
-    postApiCall(SingUpApiURL,fromData,{"Content-Type":"Content-Type"}).then(res=>{
-      console.log(res);
-    }).catch(err=>{
-      console.log("have error");
-    })
 
+    postApiCall(SingUpApiURL,fromData).then(respons=>console.log(respons))
   }
 
 
