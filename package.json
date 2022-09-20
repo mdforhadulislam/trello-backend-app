@@ -10,29 +10,21 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
-
     "node": "18.9.0",
-    "npm":"8.19.1"
-
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mdforhadulislam/trello-full-stack-app.git"
+    "npm": "8.19.1"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "morgan": "^1.10.0",
     "shortid": "^2.2.16"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
+    "dotenv": "^16.0.2",
     "nodemon": "^2.0.20"
   },
-  
-  
   "keywords": [
     "trello",
     "fullstack",
@@ -40,6 +32,10 @@
   ],
   "author": "Forhadul Islam <mdforhadul44@gamil.com>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdforhadulislam/trello-full-stack-app.git"
+  },
   "bugs": {
     "url": "https://github.com/mdforhadulislam/trello-full-stack-app/issues"
   },
