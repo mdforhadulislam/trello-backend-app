@@ -4,8 +4,9 @@ const {
   filterByUsername,
   userCreate,
 } = require("../../db/config/userCRUD");
+const User = require("../../models/User");
 
-const registerUserHendler = (req, res) => {
+const registerUserHendler = async (req, res) => {
   try {
     const name = req.body.name ?? false;
     const email = req.body.email ?? false;
@@ -13,8 +14,8 @@ const registerUserHendler = (req, res) => {
     const password = convartHash(req.body.password) ?? false;
 
     if (name && username && email && password) {
-      const checkEmail = filterByEmail(email);
-      const checkUsername = filterByUsername(username);
+      const checkEmail = await User.findOne({ email });
+      const checkUsername = await User.findOne({ username });
 
       if (checkEmail.length !== 0 && checkUsername.length !== 0) {
         return res
@@ -28,7 +29,14 @@ const registerUserHendler = (req, res) => {
         return res.status(400).json({ message: "username alrady used" });
       }
 
-      const user = userCreate(name, username, email, password);
+      const user = new User({
+        name,
+        username,
+        email,
+        password,
+      });
+
+      const newUser = user.save();
 
       res.status(200).json({ message: "registration Successfull" });
     } else {

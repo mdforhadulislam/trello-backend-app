@@ -29,7 +29,7 @@ const SingUp = () => {
     <div className="container mx-auto p-4 pb-2 bg-white">
       <ToastContainer />
       <div className="w-full md:w-1/2 lg:w-1/3 mx-auto my-8">
-        <h1 className="text-lg font-bold text-center">Sing Up</h1>
+        <h1 className="text-xl font-bold text-center mb-2">Join Us</h1>
 
         <form className="flex flex-col mt-1">
           <InputBox
