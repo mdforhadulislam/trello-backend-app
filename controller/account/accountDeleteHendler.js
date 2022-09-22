@@ -1,9 +1,10 @@
 const { findByUsername } = require("../../db/config/userCRUD");
+const User = require("../../models/User");
 
-const accountDeleteHendler = (req, res) => {
+const accountDeleteHendler = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = findByUsername(username);
+    const user = await User.findOneAndDelete({username});
     if (user) {
       res.status(200).json({ message: "account successfuly delete" });
     } else {

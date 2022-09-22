@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    boards:{
+      type: [String],
+      default: [],
+    }
   },
   { timestamps: true }
 );

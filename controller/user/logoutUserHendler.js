@@ -1,8 +1,3 @@
-const {
-  findByTokenToGetId,
-  tokenRegisterThisId,
-} = require("../../db/config/tokenCRUD");
-const crud = require("../../lib/crud");
 const Token = require("../../models/Token");
 const User = require("../../models/User");
 

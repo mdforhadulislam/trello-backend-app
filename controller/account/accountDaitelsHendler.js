@@ -1,12 +1,12 @@
 const { findByUsername } = require("../../db/config/userCRUD");
+const User = require("../../models/User");
 
-const accountDaitelsHendler = (req, res) => {
+const accountDaitelsHendler = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = findByUsername(username);
-    delete user.password;
+    const user = await User.findOne({username});
     if (user) {
-      res.status(200).json({ message: user });
+      res.status(200).json(user);
     } else {
       res.status(404).json({ message: "user not found" });
     }

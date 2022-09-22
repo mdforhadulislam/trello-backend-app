@@ -1,21 +1,18 @@
-const shortId = require("shortid");
+const mongoose = require("mongoose");
 
-class Board {
-  /***************************
-   * board createion model
-   *****************************
-   * @param {string} name
-   * @param {string} color
-   * @param {string} user
-   */
-  constructor(name, color, user) {
-    this.id = shortId.generate();
-    this.name = name;
-    this.color = color ? color : "";
-    this.user = [user];
-    this.createAt = new Date();
-    this.updateAt = new Date();
-  }
-}
+const boardSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+    },
+    color:{
+      type: String,
+      trim: true,
+    },
+    user:[]
+  },
+  { timestamps: true }
+);
 
-module.exports = Board;
+module.exports = mongoose.model("Board", boardSchema);

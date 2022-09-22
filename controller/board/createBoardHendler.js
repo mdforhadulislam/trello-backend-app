@@ -1,8 +1,8 @@
-const { createBoard } = require("../../db/config/boardCRUD");
-const { findByTokenToGetId } = require("../../db/config/tokenCRUD");
-const { findById } = require("../../db/config/userCRUD");
+const Board = require("../../models/Board");
+const Token = require("../../models/Token");
+const User = require("../../models/User");
 
-const createBoardHendler = (req, res) => {
+const createBoardHendler = async (req, res) => {
   try {
     let { name, color } = req.body;
     name = name.length > 0 ? name : false;
@@ -11,14 +11,19 @@ const createBoardHendler = (req, res) => {
       const { headers } = req;
       const token = headers.authorization;
 
-      const tokenToGetUser = findByTokenToGetId(token);
-      if (tokenToGetUser) {
-        const user = findById(tokenToGetUser.id);
+      const tokenToGetUserId = await Token.findOne({token})
+      if (tokenToGetUserId) {
+        const user = await User.findOne({_id:tokenToGetUserId.id});
 
         if (user) {
-          const newBoard = createBoard(name, color, user);
+          const newBoard = new Board({name,color,user:[user._id]})
 
-          res.status(200).json(newBoard);
+          user.boards=[...user.boards,newBoard._id]
+          await user.save()
+          
+          const board = await newBoard.save()
+
+          res.status(200).json(board);
         } else {
           res.status(401).json({ message: "you are not allow" });
         }
@@ -29,6 +34,7 @@ const createBoardHendler = (req, res) => {
       res.status(400).json({ message: "send valid value" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Intarnal Server Error" });
   }
 };
