@@ -1,12 +1,13 @@
 const { findByTokenToGetId } = require("../db/config/tokenCRUD");
+const Token = require("../models/Token");
 
-const checkLogin = (req, res, next) => {
+const checkLogin = async (req, res, next) => {
   try {
     const { headers } = req;
     const token = headers.authorization;
 
     if (token) {
-      const checkToken = findByTokenToGetId(token);
+      const checkToken = await Token.findOne({token});
       if (checkToken) {
         next();
       } else {

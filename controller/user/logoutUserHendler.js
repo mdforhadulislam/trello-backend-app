@@ -3,19 +3,23 @@ const {
   tokenRegisterThisId,
 } = require("../../db/config/tokenCRUD");
 const crud = require("../../lib/crud");
+const Token = require("../../models/Token");
+const User = require("../../models/User");
 
-const logoutUserHendler = (req, res) => {
+const logoutUserHendler = async (req, res) => {
   try {
     const { headers } = req;
     const token = headers.authorization;
     if (token) {
-      const tokenCheck = findByTokenToGetId(token);
+      const tokenCheck = await Token.findOne({token});
       if (tokenCheck) {
-        const userAllToken = tokenRegisterThisId(tokenCheck.id);
+        const findUser = await User.findOne({_id:tokenCheck.id})
+        const findAllToken = await Token.find({id:findUser._id})
 
-        userAllToken.map((sToken) => {
-          crud.delete("token", sToken.id);
-        });
+        findAllToken.map(async (token)=>{
+          await Token.findByIdAndDelete({_id:token._id})
+        })
+        
         res.status(200).json({ message: "Logout Succesfull" });
       } else {
         res.status(400).json({ message: "you are not allow" });
