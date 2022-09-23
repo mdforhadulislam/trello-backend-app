@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const loginUserHendler = require("../controller/user/loginUserHendler");
 const registerUserHendler = require("../controller/user/registerUserHendler");
-const logoutUserHendler = require("../controller/user/logoutUserhendler");
+const logoutUserHendler = require("../controller/user/logoutUserHendler");
 
 const checkLogin = require("../middlewares/checkLogin");
 
