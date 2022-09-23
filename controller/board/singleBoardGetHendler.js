@@ -1,27 +1,24 @@
-const {
-  boardFindById,
-  boardListCheckingUser,
-} = require("../../db/config/boardCRUD");
-const { findByTokenToGetId } = require("../../db/config/tokenCRUD");
-const { findById } = require("../../db/config/userCRUD");
+const Board = require("../../models/Board");
+const Token = require("../../models/Token");
+const User = require("../../models/User");
 
-const singleBoardGetHendler = (req, res) => {
+const singleBoardGetHendler = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const findBoard = boardFindById(id);
+    const findBoard = await Board.findOne({_id:id});
+
     if (findBoard) {
       const { headers } = req;
       const token = headers.authorization;
-      const checkTokenToUser = findByTokenToGetId(token);
-      if (checkTokenToUser) {
-        const findUser = findById(checkTokenToUser.id);
-        const userAndBoardRelationCheck = boardListCheckingUser(
-          findUser.username,
-          id
-        );
-        if (userAndBoardRelationCheck) {
-          res.status(200).json(findBoard);
+      const tokenToGetUserId = await Token.findOne({token})
+      if (tokenToGetUserId) {
+
+        const user = await User.findOne({_id:tokenToGetUserId.id});
+        const board = await Board.findOne({_id:id,user:user._id})
+
+        if (board) {
+          res.status(200).json(board);
         } else {
           res.status(500).json({ message: "You are not allow" });
         }

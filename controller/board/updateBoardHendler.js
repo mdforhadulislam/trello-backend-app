@@ -1,28 +1,34 @@
-const { boardFindById, updateBoard } = require("../../db/config/boardCRUD");
+const Board = require("../../models/Board");
+const Token = require("../../models/Token");
+const User = require("../../models/User");
 
-const updateBoardHendler = (req, res) => {
+const updateBoardHendler = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const findBoard = boardFindById(id);
+    const findBoard = await Board.findOne({ _id: id });
 
     if (findBoard) {
-      let { name, color } = req.body;
-      name = name.length > 0 ? name : false;
-      color = color.length > 0 ? color : false;
+      const { headers } = req;
+      const token = headers.authorization;
+      const tokenToGetUserId = await Token.findOne({ token });
+      if (tokenToGetUserId) {
+        const user = await User.findOne({ _id: tokenToGetUserId.id });
+        const board = await Board.findOne({ _id: id, user: user._id });
 
-      if (name || color) {
-        const newBoard = {
-          ...findBoard,
-          name: name,
-          color: color,
-          updateAt: new Date(),
-        };
-        const updatedBoard = updateBoard(id, newBoard);
+        if (board) {
+          let { name, color } = req.body;
+          findBoard.name = name ?? findBoard.name;
+          findBoard.color = color ?? findBoard.color;
 
-        res.status(200).json(updatedBoard);
+          const updateBoard = await findBoard.save();
+
+          res.status(200).json(updateBoard);
+        } else {
+          res.status(400).json({ message: "You are not allow" });
+        }
       } else {
-        res.status(400).json({ message: "send valid value" });
+        res.status(400).json({ message: "You are not allow" });
       }
     } else {
       res.status(404).json({ message: "board not found" });

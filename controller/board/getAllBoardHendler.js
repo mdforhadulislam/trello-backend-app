@@ -1,6 +1,3 @@
-const { findAllBoard } = require("../../db/config/boardCRUD");
-const { findByTokenToGetId } = require("../../db/config/tokenCRUD");
-const { findById } = require("../../db/config/userCRUD");
 const Board = require("../../models/Board");
 const Token = require("../../models/Token");
 const User = require("../../models/User");
@@ -13,13 +10,9 @@ const getAllBoardHendler = async (req, res) => {
     if (tokenToGetUserId) {
       const user = await User.findOne({_id:tokenToGetUserId.id});
       if (user) {
-        const allUserBoards = user.boards.map(async (boardId) => {
-          const board = await Board.find({ _id: boardId });
-          return board;
-        })
-        console.log(allUserBoards);
+        const boards = await Board.find({_id: user.boards});
 
-        res.status(200).json(allUserBoards);
+        res.status(200).json(boards);
       } else {
         res.status(401).json({ message: "you are not allow" });
       }

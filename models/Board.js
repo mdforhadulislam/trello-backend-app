@@ -9,6 +9,7 @@ const boardSchema = new mongoose.Schema(
     color:{
       type: String,
       trim: true,
+      default:""
     },
     user:[]
   },
