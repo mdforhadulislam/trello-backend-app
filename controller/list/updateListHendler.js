@@ -1,20 +1,21 @@
-const { listUpdateById, listFindById } = require("../../db/config/listCRUD");
-const crud = require("../../lib/crud");
+const List = require("../../models/List");
 
-const updateListHendler = (req, res) => {
+const updateListHendler = async (req, res) => {
   try {
     const { id } = req.params;
     let { name, color } = req.body;
 
-    name = name.length > 0 ? name : false;
-    color = color.length > 0 ? color : "";
+    const findList = await List.findOne({ _id: id });
 
-    if (name && color) {
-      const newList = listUpdateById(id, name, color);
+    if (findList) {
+      findList.name = name ?? findList.name;
+      findList.color = color ?? findList.color;
+
+      const newList = await findListedTask.save();
 
       res.status(400).json(newList);
     } else {
-      res.status(400).json({ message: "send valid value" });
+      res.status(500).json({ message: "List Not Found" });
     }
   } catch (error) {
     res.status(500).json({ message: "Intarnal Server Error" });

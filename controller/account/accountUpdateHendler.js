@@ -1,4 +1,3 @@
-const { findByUsername, updateById } = require("../../db/config/userCRUD");
 const User = require("../../models/User");
 const { convartHash } = require("../../utils/hash");
 
@@ -10,7 +9,7 @@ const accountUpdateHendler = async (req, res) => {
       user.name = req.body.name ?? user.name;
       user.username = req.body.username ?? user.username;
       user.email = req.body.email ?? user.email;
-      user.password = req.body.password ?? user.password;
+      user.password = convartHash(req.body.password) ?? user.password;
 
       await user.save();
 

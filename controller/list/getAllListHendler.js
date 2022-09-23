@@ -1,12 +1,10 @@
-const { listFilterByBoardId } = require("../../db/config/listCRUD");
+const List = require("../../models/List");
 
-const getAllListHendler = (req, res) => {
+const getAllListHendler = async (req, res) => {
   try {
     const { bi } = req.query;
-
     if (bi) {
-      const filteringList = listFilterByBoardId(bi);
-
+      const filteringList = await List.find({ boardId: bi });
       res.status(200).json(filteringList);
     } else {
       res.status(400).json({ message: "requested query paramiters not found" });

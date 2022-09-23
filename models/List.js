@@ -1,21 +1,22 @@
-const shortId = require("shortid");
+const mongoose = require("mongoose");
 
-class List {
-  /***********************
-   * list crateion models
-   ***********************
-   * @param {string} name
-   * @param {string} color
-   * @param {string} board_id
-   */
-  constructor(name, color, board_id) {
-    this.id = shortId.generate();
-    this.name = name;
-    this.color = color ? color : "";
-    this.board_id = board_id;
-    this.createAt = new Date();
-    this.updateAt = new Date();
-  }
-}
+const listSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+    },
+    color:{
+      type: String,
+      trim: true,
+      default:""
+    },
+    boardId:{
+      type: String,
+      trim: true,
+    }
+  },
+  { timestamps: true }
+);
 
-module.exports = List;
+module.exports = mongoose.model("List", listSchema);

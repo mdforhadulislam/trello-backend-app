@@ -1,4 +1,3 @@
-const { findByUsername } = require("../../db/config/userCRUD");
 const User = require("../../models/User");
 
 const accountDeleteHendler = async (req, res) => {

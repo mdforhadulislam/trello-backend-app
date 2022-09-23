@@ -1,9 +1,9 @@
-const { taskGetByListId } = require("../../db/config/taskCRUD");
+const Task = require("../../models/Task");
 
-const getListTaskHendler = (req, res) => {
+const getListTaskHendler = async(req, res) => {
   try {
     const { li } = req.query;
-    const findListedTask = taskGetByListId(li);
+    const findListedTask = await Task.find({listId: li});
     if (findListedTask) {
       res.status(500).json(findListedTask);
     } else {

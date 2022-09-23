@@ -24,7 +24,5 @@ router.use("/api/v1/auth/account", checkLogin, accountRouter);
 router.use("/api/v1/boards", checkLogin, boardRouter);
 router.use("/api/v1/lists", checkLogin, listRouter);
 router.use("/api/v1/tasks", checkLogin, taskRouter);
-// router.use("/api/v1/token",)
-// router.use("/api/v1/profile/upload/",)
 
 module.exports = router;

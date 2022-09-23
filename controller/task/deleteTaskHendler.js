@@ -1,12 +1,9 @@
-const { taskDeleteById } = require("../../db/config/taskCRUD");
-const crud = require("../../lib/crud");
+const Task = require("../../models/Task");
 
-const deleteTaskHendler = (req, res) => {
+const deleteTaskHendler = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const deleteTask = taskDeleteById(id);
-
+    const deleteTask = await Task.findByIdAndDelete({ _id: id });
     if (deleteTask) {
       res.status(200).json(deleteTask);
     } else {

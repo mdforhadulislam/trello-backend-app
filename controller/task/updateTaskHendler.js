@@ -1,16 +1,17 @@
-const { taskUpdateById } = require("../../db/config/taskCRUD");
+const Task = require("../../models/Task");
 
-const updateTaskHendler = (req, res) => {
+const updateTaskHendler = async (req, res) => {
   try {
     const { id } = req.params;
     let { task, done } = req.body;
-
-    const updateTask = taskUpdateById(id, task, done);
-
-    if (updateTask) {
-      res.status(500).json(newTask);
+    const findTask = await Task.findOne({ _id: id });
+    if (findTask) {
+      findTask.task = task ?? findTask.task;
+      findTask.done = done ?? findTask.done;
+      const updatedTask = await findTask.save();
+      res.status(200).json(updatedTask);
     } else {
-      res.status(500).json({ message: "task not found" });
+      res.status(404).json({ message: "task not found" });
     }
   } catch (error) {
     res.status(500).json({ message: "Intarnal Server Error" });

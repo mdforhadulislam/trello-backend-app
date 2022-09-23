@@ -1,4 +1,3 @@
-const { findByTokenToGetId } = require("../db/config/tokenCRUD");
 const Token = require("../models/Token");
 
 const checkLogin = async (req, res, next) => {
