@@ -5,7 +5,7 @@ const deleteListHendler = async (req, res) => {
     const { id } = req.params;
     const findList = await List.findOne({ _id: id });
     if (findList) {
-      const deleteList = List.findByIdAndDelete({ _id: findList._id });
+      const deleteList = await List.findByIdAndDelete({ _id: findList._id });
       res.status(200).json(deleteList);
     } else {
       res.status(404).json({ message: "List not found" });

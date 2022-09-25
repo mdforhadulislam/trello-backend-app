@@ -11,7 +11,7 @@ const updateListHendler = async (req, res) => {
       findList.name = name ?? findList.name;
       findList.color = color ?? findList.color;
 
-      const newList = await findListedTask.save();
+      const newList = await findList.save();
 
       res.status(400).json(newList);
     } else {

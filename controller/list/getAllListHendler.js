@@ -4,7 +4,7 @@ const getAllListHendler = async (req, res) => {
   try {
     const { bi } = req.query;
     if (bi) {
-      const filteringList = await List.find({ boardId: bi });
+      const filteringList = await List.find({ board_id: bi });
       res.status(200).json(filteringList);
     } else {
       res.status(400).json({ message: "requested query paramiters not found" });
