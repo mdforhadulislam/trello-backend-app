@@ -11,6 +11,6 @@ router
   .put(accountUpdateHendler)
   .delete(accountDeleteHendler);
 
-router.get("/:token",tokenToGetAccountDaitelsHendler)
+router.get("/token/:token",tokenToGetAccountDaitelsHendler)
 
 module.exports = router;

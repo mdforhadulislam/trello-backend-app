@@ -3,10 +3,9 @@ const User = require("../../models/User");
 
 const tokenToGetAccountDaitelsHendler = async (req, res) => {
   try {
-    const token = req.params;
+    const {token} = req.params;
 
     const findToken = await Token.findOne({ token });
-
     if (findToken) {
       const findUser = await User.findOne({ _id: findToken.id });
       if (findUser) {
