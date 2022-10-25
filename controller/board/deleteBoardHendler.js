@@ -20,7 +20,7 @@ const deleteBoardHendler = async (req, res) => {
           const boardDelete = await Board.findByIdAndDelete({ _id: id });
           if (boardDelete) {
             res
-              .status(500)
+              .status(200)
               .json({ message: "board deleted", board: boardDelete });
           } else {
             res.status(500).json({ message: "board not found" });
