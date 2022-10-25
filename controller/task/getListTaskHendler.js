@@ -5,7 +5,7 @@ const getListTaskHendler = async(req, res) => {
     const { li } = req.query;
     const findListedTask = await Task.find({listId: li});
     if (findListedTask) {
-      res.status(500).json(findListedTask);
+      res.status(200).json(findListedTask);
     } else {
       res.status(404).json([]);
     }
